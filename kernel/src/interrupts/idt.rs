@@ -16,8 +16,8 @@ lazy_static! {
         idt.breakpoint.set_handler_fn(breakpoint_interrupt::handler);
         idt.page_fault.set_handler_fn(page_fault::handler);
         idt.double_fault.set_handler_fn(double_fault::handler);
-        idt[InterruptIndex::Timer.as_usize()].set_handler_fn(timer_interrupt::handler);
-        idt[InterruptIndex::Keyboard.as_usize()].set_handler_fn(keyboard_interrupt::handler);
+        idt[InterruptIndex::Timer.as_u8()].set_handler_fn(timer_interrupt::handler);
+        idt[InterruptIndex::Keyboard.as_u8()].set_handler_fn(keyboard_interrupt::handler);
         idt
     };
 }
