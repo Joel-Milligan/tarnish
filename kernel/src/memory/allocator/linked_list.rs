@@ -24,6 +24,12 @@ impl ListNode {
     }
 }
 
+impl Default for ListNode {
+    fn default() -> Self {
+        Self::new(0)
+    }
+}
+
 pub struct LinkedListAllocator {
     head: ListNode,
 }
@@ -121,6 +127,12 @@ impl LinkedListAllocator {
             .pad_to_align();
         let size = layout.size().max(mem::size_of::<ListNode>());
         (size, layout.align())
+    }
+}
+
+impl Default for LinkedListAllocator {
+    fn default() -> Self {
+        Self::new()
     }
 }
 

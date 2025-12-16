@@ -7,6 +7,10 @@ A toy operating system built in Rust, following this [website](https://os.phil-o
 - `cargo run --bin qemu-bios`: Run in QEMU using BIOS
 - `cargo run --bin qemu-uefi`: Run in QEMU using UEFI
 
+## Tasks
+1. Investigate keyboard interrupt logging not working in UEFI despite working in BIOS
+2. Implement ability to use [testing](https://os.phil-opp.com/testing).
+
 ## Modules
 The following section briefly describes the various components of the kernel.
 
