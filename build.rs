@@ -1,22 +1,18 @@
+use bootloader::DiskImageBuilder;
+use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    let out_dir = PathBuf::from(std::env::var_os("OUT_DIR").unwrap());
-    let kernel = PathBuf::from(std::env::var_os("CARGO_BIN_FILE_KERNEL_kernel").unwrap());
+    let kernel_path = env::var("CARGO_BIN_FILE_KERNEL").unwrap();
+    let disk_builder = DiskImageBuilder::new(PathBuf::from(kernel_path));
 
-    // create a BIOS disk image
-    let bios_path = out_dir.join("bios.img");
-    bootloader::BiosBoot::new(&kernel)
-        .create_disk_image(&bios_path)
-        .unwrap();
-
-    // create a UEFI disk image
+    let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let uefi_path = out_dir.join("uefi.img");
-    bootloader::UefiBoot::new(&kernel)
-        .create_disk_image(&uefi_path)
-        .unwrap();
+    let bios_path = out_dir.join("bios.img");
 
-    // pass the disk image paths as env variables to the `main.rs`
-    println!("cargo:rustc-env=BIOS_PATH={}", bios_path.display());
-    println!("cargo:rustc-env=UEFI_PATH={}", uefi_path.display());
+    disk_builder.create_uefi_image(&uefi_path).unwrap();
+    disk_builder.create_bios_image(&bios_path).unwrap();
+
+    println!("cargo:rustc-env=BIOS_IMAGE={}", bios_path.display());
+    println!("cargo:rustc-env=UEFI_IMAGE={}", uefi_path.display());
 }

@@ -1,6 +1,12 @@
 # Tarnish
 A toy operating system built in Rust, following this [website](https://os.phil-opp.com/).
 
+## How to run
+- Make sure `qemu-system-x86_64` is installed on machine
+- `cargo run`: Print locations of created images
+- `cargo run --bin qemu-bios`: Run in QEMU using BIOS
+- `cargo run --bin qemu-uefi`: Run in QEMU using UEFI
+
 ## Modules
 The following section briefly describes the various components of the kernel.
 

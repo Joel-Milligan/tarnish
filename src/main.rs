@@ -1,20 +1,14 @@
 use std::env;
+use std::fs;
 
 fn main() {
-    let uefi = false;
-    let path = if uefi {
-        env!("UEFI_PATH")
-    } else {
-        env!("BIOS_PATH")
-    };
+    let current_exe = env::current_exe().unwrap();
+    let uefi_target = current_exe.with_file_name("uefi.img");
+    let bios_target = current_exe.with_file_name("bios.img");
 
-    let mut cmd = std::process::Command::new("qemu-system-x86_64");
-    cmd.arg("-drive").arg(format!("format=raw,file={path}"));
+    fs::copy(env!("UEFI_IMAGE"), &uefi_target).unwrap();
+    fs::copy(env!("BIOS_IMAGE"), &bios_target).unwrap();
 
-    if uefi {
-        cmd.arg("-bios").arg(ovmf_prebuilt::ovmf_pure_efi());
-    }
-
-    let mut child = cmd.spawn().unwrap();
-    child.wait().unwrap();
+    println!("UEFI disk image at {}", uefi_target.display());
+    println!("BIOS disk image at {}", bios_target.display());
 }

@@ -62,7 +62,7 @@ impl<A> Locked<A> {
         }
     }
 
-    pub fn lock(&self) -> MutexGuard<A> {
+    pub fn lock(&self) -> MutexGuard<'_, A> {
         self.inner.lock()
     }
 }

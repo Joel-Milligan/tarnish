@@ -2,13 +2,14 @@
 name = "tarnish"
 version = "0.1.0"
 edition = "2021"
+default-run = "tarnish"
 
 [workspace]
 members = ["kernel"]
 
 [dependencies]
-ovmf-prebuilt = "0.1.0-alpha.1"
+ovmf-prebuilt = "0.2.5"
 
 [build-dependencies]
-bootloader = "0.11"
 kernel = { path = "kernel", artifact = "bin", target = "x86_64-unknown-none" }
+bootloader = "0.11"
